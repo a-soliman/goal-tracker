@@ -75,6 +75,29 @@ app.post('/goals', ( req, res ) => {
     })
 });
 
+app.put('/goals/:id', ( req, res ) => {
+    id = req.params.id;
+    isValid_id = ObjectID.isValid(id);
+    
+    if ( !isValid_id ){
+        res.status(400).send('Id is not valid.')
+    }
+
+    let { name, type, deadline } = req.body;
+
+
+    Goal.findOneAndUpdate({ _id: ObjectID(id)}, {$set: {name, type, deadline }}, 
+    ( err, updatedGoal ) => {
+        if ( err ) {
+            return res.send(err);
+        }
+        if ( !updatedGoal ){
+            return res.status(400).send('No Goal with the provided id.')
+        }
+        res.status(204).send('updated')
+    })     
+});
+
 
 
 
