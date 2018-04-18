@@ -1,8 +1,8 @@
 {
-  "name": "knockout-training",
+  "name": "goal-tracker",
   "version": "1.0.0",
-  "description": "Knockout training",
-  "main": "index.js",
+  "description": "Simple Goal Tracker application",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,5 +24,10 @@
     "gulp-uglify": "^3.0.0",
     "gulp-watch": "^5.0.0",
     "static-server": "^2.2.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mongojs": "^2.5.0"
   }
 }
