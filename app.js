@@ -26,6 +26,23 @@ app.get('/', ( req, res ) => {
     res.send('It works');
 });
 
+app.get('/goals', ( req, res ) => {
+    Goal.find()
+        .exec( ( err, goals ) => {
+            if ( err ) {
+                res.send('An error has occured!');
+                return;
+            }
+            console.log(goals);
+            res.json(goals)
+        });
+    
+});
+
+
+
+
+
 app.listen(3333, () => {
     console.log('app is runing on port 3333.');
 })
