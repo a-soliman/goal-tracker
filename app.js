@@ -39,6 +39,25 @@ app.get('/goals', ( req, res ) => {
     
 });
 
+app.get('/goals/:id', ( req, res ) => {
+    id = req.params.id;
+    isValid_id = ObjectID.isValid(id);
+    
+    if ( !isValid_id ){
+        res.status(400).send('Id is not valid.')
+    }
+
+    Goal.findOne({ _id: ObjectID(id)}, ( err, goal) => {
+        if ( err ) {
+            return res.send(err);
+        }
+        if ( !goal ) {
+            return res.status(400).send('No Goal with the provided id.')
+        }
+        return res.json(goal)
+    })
+});
+
 
 
 
