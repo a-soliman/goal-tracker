@@ -98,7 +98,24 @@ app.put('/goals/:id', ( req, res ) => {
     })     
 });
 
+app.delete('/goals/:id', ( req, res ) => {
+    id = req.params.id;
+    isValid_id = ObjectID.isValid(id);
+    
+    if ( !isValid_id ){
+        return res.status(400).send('Id is not valid.')
+    }
 
+    Goal.findOneAndRemove({ _id: ObjectID(id)}, (err, deletedGoal) => {
+        if (err) {
+            return res.send('An error occured while deleting..')
+        }
+        if( !deletedGoal ){
+            return res.status(400).send('No Goal with the provided id.')
+        }
+        res.send('deleted')
+    })
+})
 
 
 
