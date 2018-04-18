@@ -58,6 +58,23 @@ app.get('/goals/:id', ( req, res ) => {
     })
 });
 
+app.post('/goals', ( req, res ) => {
+    let name        = req.body.name;
+    let type        = req.body.type;
+    let deadline    = req.body.deadline;
+
+    let newGoal = new Goal({ name, type, deadline });
+
+    newGoal.save(( err, goal ) => {
+        if (err){
+            res.send('error saving book');
+            return;
+        }
+        console.log(goal);
+        res.send(goal);
+    })
+});
+
 
 
 
