@@ -40,7 +40,7 @@
                         id="name" 
                         class="form-control" 
                         placeholder="Goal Name"
-                        data-bind="value: goalInputName"    
+                        data-bind="value: goalInputName, valueUpdate: 'keypress'"    
                     >
                 </div>
                 <div class="col-md-3">
@@ -67,7 +67,7 @@
                     <br>
                     <button 
                         class="btn btn-primary"
-                        data-bind="click: addGoal"
+                        data-bind="click: addGoal, enable: goalInputName"
                         >Add Goal</button>
                     <button class="btn btn-danger">Delete</button>
                 </div>
@@ -93,7 +93,7 @@
                                 <td>
                                     <button 
                                         class="btn btn-danger btn-xs"
-                                        data-bind="click: deleteGoal"
+                                        data-bind="click: $parent.deleteGoal"
                                         >
                                         X
                                     </button>
