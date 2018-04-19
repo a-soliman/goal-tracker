@@ -67,9 +67,18 @@
                     <br>
                     <button 
                         class="btn btn-primary"
-                        data-bind="click: addGoal, enable: goalInputName"
+                        data-bind="visible: editMode()==false, click: addGoal, enable: goalInputName"
                         >Add Goal</button>
-                    <button class="btn btn-danger">Delete</button>
+                    <button 
+                    class="btn btn-primary"
+                    data-bind="visible: editMode()==true, click: updateGoal"
+                    >Update Goal</button>
+
+                    <button 
+                        class="btn btn-danger"
+                        data-bind="visible: editMode()==true, click: restForm"
+                        >Cancel
+                    </button>
                 </div>
             </div>
             <div class="row">
@@ -77,19 +86,26 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th>Name</th>
                                 <th>Type</th>
                                 <th>Deadline</th>
+                                <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: goals">
                             <tr>
-                                <td><input type="checkbox"></td>
                                 <td data-bind="text: $data.name">{{ Name }}</td>
                                 <td data-bind="text: $data.type">{{ Type }}</td>
                                 <td data-bind="text: $data.deadline">{{ Deadline }}</td>
+                                <td>
+                                        <button 
+                                            class="btn btn-warning btn-xs"
+                                            data-bind="click: $parent.editGoal"
+                                            >
+                                            E
+                                        </button>
+                                    </td>
                                 <td>
                                     <button 
                                         class="btn btn-danger btn-xs"
