@@ -7,8 +7,12 @@ function getGoals() {
 function ViewModel() {
     const self = this;
 
+    self.goalTypes = ko.observableArray(['Health & Fitness', 'Profeessional', 'Family & Relationships', 'Self help']);
+
     // STORES THE GOALS ARRY AFTER THE AJAX CALL
     self.goals = ko.observableArray();
+    self.editMode = ko.observable(false);
+    self.updatableGoal = ko.observable();
     
     // FORM VALUES
     self.goalInputName      = ko.observable();
@@ -28,9 +32,10 @@ function ViewModel() {
             type: "POST",
             contentType: 'application/json',
             success: function( data ) {
-                console.log('Goal Added..', data);
+                console.log('Goal Added..');
                 newGoal._id = data._id;
                 self.goals.push(newGoal);
+                self.restForm();
             },
             error: function( xhr, status, err ) {
                 consoe.log('an error detected...')
@@ -56,7 +61,50 @@ function ViewModel() {
         })
     };
 
-    self.goalTypes = ko.observableArray(['Health & Fitness', 'Profeessional', 'Family & Relationships', 'Self help'])
+    self.editGoal = function () {
+        self.editMode(true);
+        self.goalInputName(this.name);
+        self.goalInputType(this.type);
+        self.goalInputDeadline(this.deadline);
+        self.updatableGoal(this);
+    }
+    self.allowUpdate = ko.observable(false);
+
+    self.updateGoal = function() {
+        let goal = self.updatableGoal()
+        let id = goal._id;
+        let name = self.goalInputName();
+        let type = self.goalInputType();
+        let deadline = self.goalInputDeadline();
+        let indexInGoals = self.goals().indexOf(goal);
+
+        $.ajax({
+            url: `http://localhost:3333/goals/${id}`,
+            data: JSON.stringify({"name": name, "type": type, "deadline": deadline}),
+            type: 'PUT',
+            contentType: 'application/json',
+            success: function(data) {
+                console.log('updated')
+                let oldGoal = self.goals()[indexInGoals];
+                let updatedGoal = { _id: id, name, type, deadline}
+                self.goals.replace(oldGoal, updatedGoal);
+
+                self.restForm();
+            },
+            error: function( xhr, status, err ) {
+                console.log('an error detected...')
+            }
+        })
+    }
+
+    self.restForm = function() {
+        self.goalInputName('');
+        self.goalInputType('');
+        self.goalInputDeadline('');
+        self.updatableGoal('')
+        self.editMode(false);
+    }
+    
 }
 
 let viewModel = new ViewModel();
