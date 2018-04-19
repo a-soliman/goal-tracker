@@ -36,14 +36,28 @@ function ViewModel() {
                 consoe.log('an error detected...')
             }
         })
-        
-        
+    };
 
+    self.deleteGoal = function () {
+        const indexInGoals = self.goals().indexOf(this);
+        $.ajax({
+            url: `http://localhost:3333/goals/${this._id}`,
+            type: 'Delete',
+            success: function(data) {
+                console.log('deleted', data)
+                let goals = self.goals();
+                goals.splice(indexInGoals, 1);
+                self.goals(goals);
+                
+            },
+            error: function( xhr, status, err ) {
+                console.log('an error detected...')
+            }
+        })
     };
 
     self.goalTypes = ko.observableArray(['Health & Fitness', 'Profeessional', 'Family & Relationships', 'Self help'])
 }
 
 let viewModel = new ViewModel();
-
 ko.applyBindings(viewModel)
