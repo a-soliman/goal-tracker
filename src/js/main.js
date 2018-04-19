@@ -22,7 +22,21 @@ function ViewModel() {
 
         const newGoal = { name, type, deadline };
 
-        self.goals.push(newGoal);
+        $.ajax({
+            url: 'http://localhost:3333/goals',
+            data: JSON.stringify({"name": name, "type": type, "deadline": deadline}),
+            type: "POST",
+            contentType: 'application/json',
+            success: function( data ) {
+                console.log('Goal Added..', data);
+                newGoal._id = data._id;
+                self.goals.push(newGoal);
+            },
+            error: function( xhr, status, err ) {
+                consoe.log('an error detected...')
+            }
+        })
+        
         
 
     };

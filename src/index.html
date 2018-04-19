@@ -81,6 +81,7 @@
                                 <th>Name</th>
                                 <th>Type</th>
                                 <th>Deadline</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: goals">
@@ -89,6 +90,14 @@
                                 <td data-bind="text: $data.name">{{ Name }}</td>
                                 <td data-bind="text: $data.type">{{ Type }}</td>
                                 <td data-bind="text: $data.deadline">{{ Deadline }}</td>
+                                <td>
+                                    <button 
+                                        class="btn btn-danger btn-xs"
+                                        data-bind="click: deleteGoal"
+                                        >
+                                        X
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
