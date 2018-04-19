@@ -35,21 +35,40 @@
             <div class="row">
                 <div class="col-md-3">
                     <label for="name">Goal Name</label>
-                    <input type="text" id="name" class="form-control" placeholder="Goal Name">
+                    <input 
+                        type="text" 
+                        id="name" 
+                        class="form-control" 
+                        placeholder="Goal Name"
+                        data-bind="value: goalInputName"    
+                    >
                 </div>
                 <div class="col-md-3">
                     <label for="type">Goal Type</label>
-                    <select name="type" id="type" class="form-control">
+                    <select 
+                        name="type" 
+                        id="type" 
+                        class="form-control"
+                        data-bind="value: goalInputType, options: goalTypes,optionsCaption: 'Choose Type'"
+                    >
 
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label for="deadline">Deadline</label>
-                    <input type="date" id="deadline" class="form-control">
+                    <input 
+                        type="date" 
+                        id="deadline" 
+                        class="form-control"
+                        data-bind="value: goalInputDeadline"
+                    >
                 </div>
                 <div class="col-md-3">
                     <br>
-                    <button class="btn btn-primary">Add Goal</button>
+                    <button 
+                        class="btn btn-primary"
+                        data-bind="click: addGoal"
+                        >Add Goal</button>
                     <button class="btn btn-danger">Delete</button>
                 </div>
             </div>
